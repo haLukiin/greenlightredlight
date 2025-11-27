@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class dollScript : MonoBehaviour
 {
@@ -8,15 +9,29 @@ public class dollScript : MonoBehaviour
     private GameObject player;
     private bool playerInside = false;
     private squidScript playerMovement;
- 
+  
+    public GameObject Light;
+    public bool greenLight = false; 
 
-   
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         StartCoroutine(TurnRoutine());
         player = GameObject.FindGameObjectWithTag("Player");
         playerMovement = player.GetComponent<squidScript>();
+
+    }
+   
+  
+
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+
 
     }
     System.Collections.IEnumerator TurnRoutine()
@@ -26,21 +41,6 @@ public class dollScript : MonoBehaviour
             yield return new WaitForSeconds(turnInterval);
             Flip();
         }
-    }
-    void Flip()
-    {
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
-    }
-
-
-
-    // Update is called once per frame
-    void Update()
-    {      
-      
-        
     }
     bool CanSeePlayer()
     {
@@ -68,7 +68,7 @@ public class dollScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerInside)
+        if (playerInside && player.GetComponent<squidScript>().safe == false)
         {
             if (player != null && CanSeePlayer())
             {
@@ -105,4 +105,22 @@ public class dollScript : MonoBehaviour
         }
     }
    
+    void Flip()
+    {
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+        if (greenLight == false)
+        {
+            greenLight = true;
+            Light.GetComponent<Image>().color= Color.green; 
+        }
+        else
+        {
+            greenLight = false;
+            Light.GetComponent<Image>().color = Color.red;
+        }
+    }
+
+
 }

@@ -6,6 +6,7 @@ public class squidScript : MonoBehaviour
     public int thrust;
     public float max_velo = 50;
     public float moveTreshold = 0.01f;
+    public bool safe = false;
 
 
 
@@ -35,7 +36,7 @@ public class squidScript : MonoBehaviour
         {
             rb.AddForce(new Vector2(-1, 0) * thrust);
         }
-        
+      
 
     }
     public bool IsMoving()
